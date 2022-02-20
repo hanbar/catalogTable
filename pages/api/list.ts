@@ -7,7 +7,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data[]>,
 ) {
-  const { search } = req.query;
+  const search: string = req.query.search as string;
   let result = list;
   if (search) {
     result = list.filter((item) => {

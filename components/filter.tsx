@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
 type Props = {
-  onChange: () => void;
+  onChange: (e: any) => void;
 };
 
 const Filter: FunctionComponent<Props> = function Filter({ onChange }) {

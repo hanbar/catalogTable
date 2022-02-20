@@ -38,7 +38,7 @@ const Home: NextPage<Props> = function Home({ data }) {
     filterTable();
   }, [diyChecked, printerChecked, rawData]);
 
-  const handleChange = (key) => {
+  const handleChange = (key: string) => {
     if (key === 'diyKit') {
       setDiyChecked(!diyChecked);
     } else {

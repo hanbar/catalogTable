@@ -2,10 +2,11 @@ import Image from 'next/image';
 import React, { FunctionComponent, useState } from 'react';
 import { cloneDeep, find, isEmpty } from 'lodash';
 import { Data } from '../types/DataType';
-import { Row } from '../types/RowType';
 import TableRow from './tableRow';
 import TableFooterRow from './tableFooterRow';
-import { StyledTable, TH, ParamsList, TFoot } from '../styles/table';
+import {
+  StyledTable, TH, ParamsList, TFoot,
+} from '../styles/table';
 import thumbnail from '../images/MK3S.jpg';
 import { rows, tfooterRows } from './rows';
 
@@ -14,15 +15,15 @@ type Props = {
 };
 
 const Table: FunctionComponent<Props> = function Table({ data }) {
-  const [hiddenParams, setHiddenParams] = useState([]);
+  const [hiddenParams, setHiddenParams] = useState<string[]>([]);
 
-  const hideRow = (rowKey) => {
+  const hideRow = (rowKey: string) => {
     const hiddenRows = cloneDeep(hiddenParams);
     hiddenRows.push(rowKey);
     setHiddenParams(hiddenRows);
   };
 
-  const showRow = (rowKey) => {
+  const showRow = (rowKey: string) => {
     const hiddenRows = cloneDeep(hiddenParams);
     const index = hiddenRows.indexOf(rowKey);
     hiddenRows.splice(index, 1);
@@ -34,7 +35,7 @@ const Table: FunctionComponent<Props> = function Table({ data }) {
       <StyledTable>
         <thead>
           <tr>
-            <th/>
+            <th />
             {data.map((column) => (
               <TH key={column.id}>
                 <div><Image src={thumbnail} alt="Thumbnail" width="150px" height="150px" /></div>
@@ -71,7 +72,7 @@ const Table: FunctionComponent<Props> = function Table({ data }) {
             <ul>
               {hiddenParams.map((param) => (
                 <li key={param} onClick={showRow.bind(null, param)}>
-                  {find(rows, ['key', param]).name}
+                  {(find(rows, ['key', param]) || {}).name}
                 </li>
               ))}
             </ul>

@@ -13,7 +13,7 @@ const TableFooterRow: FunctionComponent<Props> = function TableFooterRow({ colum
     <tr>
       <td />
       {columns.map((column) => {
-        if (column[row.key]) {
+        if (column[row.key as keyof Data]) {
           return <td key={column.id}><Button text={row.name} /></td>;
         }
         return <td key={column.id} />;

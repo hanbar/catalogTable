@@ -19,7 +19,7 @@ const TableRow: FunctionComponent<Props> = function TableRow({ columns, row, han
         <Icon><FontAwesomeIcon icon={faEye} onClick={handleHideRow} /></Icon>
       </TD>
       {columns.map((column) => {
-        return <td key={column.id}>{column[row.key]}</td>;
+        return <td key={column.id}>{column[row.key as keyof Data]}</td>;
       })}
     </TR>
   );
