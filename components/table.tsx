@@ -1,15 +1,19 @@
+import Image from 'next/image';
 import React, { FunctionComponent, useState } from 'react';
 import { cloneDeep, find, isEmpty } from 'lodash';
 import { Data } from '../types/DataType';
 import { Row } from '../types/RowType';
 import TableRow from './tableRow';
+import TableFooterRow from './tableFooterRow';
+import { StyledTable, TH, ParamsList, TFoot } from '../styles/table';
+import thumbnail from '../images/MK3S.jpg';
+import { rows, tfooterRows } from './rows';
 
 type Props = {
   data: Data[];
-  rows: Row[];
 };
 
-const Table: FunctionComponent<Props> = function Table({ data, rows }) {
+const Table: FunctionComponent<Props> = function Table({ data }) {
   const [hiddenParams, setHiddenParams] = useState([]);
 
   const hideRow = (rowKey) => {
@@ -27,35 +31,52 @@ const Table: FunctionComponent<Props> = function Table({ data, rows }) {
 
   return (
     <>
-      <table>
+      <StyledTable>
         <thead>
           <tr>
             <th/>
-            {data.map(column => (
-              <th key={column.id}>{column.title}</th>
+            {data.map((column) => (
+              <TH key={column.id}>
+                <div><Image src={thumbnail} alt="Thumbnail" width="150px" height="150px" /></div>
+                <span>{column.title}</span>
+              </TH>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
-            <TableRow
+          {rows.filter((row) => (hiddenParams.indexOf(row.key) === -1))
+            .map((row) => (
+              <TableRow
+                key={row.key}
+                columns={data}
+                row={row}
+                handleHideRow={hideRow.bind(null, row.key)}
+              />
+            ))}
+        </tbody>
+        <TFoot>
+          {tfooterRows.map((row) => (
+            <TableFooterRow
               key={row.key}
               columns={data}
               row={row}
-              handleHideRow={hideRow.bind(null, row.key)}
-              isHidden={hiddenParams.indexOf(row.key) !== -1}
-            />)
-          )}
-        </tbody>
-      </table>
-      {!isEmpty(hiddenParams) &&
-        <div>
-          <span>Skryté parametry:</span>
-          <ul>
-            {hiddenParams.map(param => <li key={param} onClick={showRow.bind(null, param)}>{find(rows, ['key', param]).name}</li>)}
-          </ul>
-        </div>
-      }
+            />
+          ))}
+        </TFoot>
+      </StyledTable>
+      {!isEmpty(hiddenParams)
+        && (
+          <ParamsList>
+            <span>Skryté parametry:</span>
+            <ul>
+              {hiddenParams.map((param) => (
+                <li key={param} onClick={showRow.bind(null, param)}>
+                  {find(rows, ['key', param]).name}
+                </li>
+              ))}
+            </ul>
+          </ParamsList>
+        )}
     </>
   );
 };

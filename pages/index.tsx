@@ -3,11 +3,11 @@ import { NextPage, GetServerSideProps } from 'next';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { TableFilter } from '../styles/table';
 import { Data } from '../types/DataType';
 import Table from '../components/table';
 import Filter from '../components/filter';
 import Checkbox from '../components/checkbox';
-import { rows } from '../components/rows';
 
 type Props = {
   data: Data[];
@@ -62,10 +62,12 @@ const Home: NextPage<Props> = function Home({ data }) {
       </Head>
 
       <main className={styles.main}>
-        <Filter onChange={handleFilterChange} />
-        <Checkbox label="DIY Kit" onChange={handleChange.bind(null, 'diyKit')} />
-        <Checkbox label="Build printer" onChange={handleChange.bind(null, 'builtPrinter')} />
-        <Table data={filteredData} rows={rows} />
+        <TableFilter>
+          <Filter onChange={handleFilterChange} />
+          <Checkbox label="DIY Kit" onChange={handleChange.bind(null, 'diyKit')} />
+          <Checkbox label="Build printer" onChange={handleChange.bind(null, 'builtPrinter')} />
+        </TableFilter>
+        <Table data={filteredData} />
       </main>
     </div>
   );

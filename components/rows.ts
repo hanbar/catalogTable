@@ -5,6 +5,9 @@ export const rows = [
   { key: 'maxTemperatures', name: 'Max temperature' },
   { key: 'controller', name: 'Controller' },
   { key: 'filamentDiameter', name: 'Filament diameter' },
+];
+
+export const tfooterRows = [
   { key: 'diyKit', name: 'DIY Kit' },
   { key: 'builtPrinter', name: 'Built Printer' },
 ];
